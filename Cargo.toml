@@ -2,6 +2,14 @@
 name = "sha_256"
 version = "0.1.0"
 edition = "2021"
+authors = ["George Oastler <goastler4@gmail.com>"]
+description = "Optimised sha-256"
+repository = "https://github.com/goastler/sha_256"
+homepage = "https://github.com/goastler/sha_256"
+license-file = "LICENSE"
+readme = "README.md"
+keywords = ["sha", "sha256", "sha-256", "hash", "digest"]
+categories = ["algorithms", "cryptography", "cryptography::cryptocurrencies", "encoding" ]
 
 [lib]
 name = "sha_256"
@@ -12,3 +20,6 @@ path = "src/lib.rs"
 #lto = "fat"
 #codegen-units = 1
 #target-cpu = "native"
+
+[badges]
+maintenance = { status = "passively-maintained" }
