@@ -1,0 +1,14 @@
+[package]
+name = "sha-256"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "sha-256"
+path = "src/lib.rs"
+
+#[profile.release]
+#opt-level = 2
+#lto = "fat"
+#codegen-units = 1
+#target-cpu = "native"
