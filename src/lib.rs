@@ -3,8 +3,10 @@
 use core::iter::Iterator;
 use core::convert::TryInto;
 
+/// A structure representing the SHA-256 hash algorithm.
 pub struct Sha256 {
-    w: [u32; 64],
+    w: [u32; 64], // words for the message schedule
+    // the 8 hash values
     h0: u32,
     h1: u32,
     h2: u32,
@@ -13,10 +15,16 @@ pub struct Sha256 {
     h5: u32,
     h6: u32,
     h7: u32,
+    // number of 64 byte chunks in the message
     n_chunks: usize,
 }
 
 impl Sha256 {
+
+    /// Creates a new instance of the SHA-256 hash algorithm.
+    ///
+    /// # Returns
+    /// A new `Sha256` instance with initialized state.
     pub fn new() -> Self {
         Self {
             w: [0; 64],
@@ -32,6 +40,10 @@ impl Sha256 {
         }
     }
 
+    /// Sets the last chunk of the message for SHA-256 processing.
+    ///
+    /// # Arguments
+    /// * `msg` - A byte slice representing the message to be hashed.
     #[inline(always)]
     fn set_chunk_last(&mut self, msg: &[u8]) {
         unsafe {
@@ -73,6 +85,11 @@ impl Sha256 {
         }
     }
 
+    /// Sets a chunk of the message for SHA-256 processing.
+    ///
+    /// # Arguments
+    /// * `msg` - A byte slice representing the message to be hashed.
+    /// * `index` - The index of the chunk to be set.
     #[inline(always)]
     fn set_chunk(&mut self, msg: &[u8], index: usize) {
         unsafe {
@@ -85,6 +102,10 @@ impl Sha256 {
         }
     }
 
+    /// Sets the number of chunks for the given message.
+    ///
+    /// # Arguments
+    /// * `msg` - A byte slice representing the message to be hashed.
     #[inline(always)]
     fn set_n_chunks(&mut self, msg: &[u8]) {
         let msg_len = msg.len();
@@ -93,6 +114,7 @@ impl Sha256 {
         self.n_chunks = total_length / 64;
     }
 
+    /// Processes a single chunk of the message using the SHA-256 algorithm.
     #[inline(always)]
     fn sha256_chunk(&mut self) {
         unsafe {
@@ -374,6 +396,13 @@ impl Sha256 {
         }
     }
 
+    /// Computes the SHA-256 digest of the given message.
+    ///
+    /// # Arguments
+    /// * `msg` - A byte slice representing the message to be hashed.
+    ///
+    /// # Returns
+    /// A 32-byte array representing the SHA-256 hash of the message.
     pub fn digest(&mut self, msg: &[u8]) -> [u8; 32] {
         self.h0 = 0x6a09e667;
         self.h1 = 0xbb67ae85;
