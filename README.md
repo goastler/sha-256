@@ -3,16 +3,17 @@
 A fast implementation of sha-256 in rust.
 
 ## Features
-- [x] Partially unrolled loops for increased efficiency from cpu cache usage
-- [x] Bypass rust safety checks to eliminate array index safety checks
-- [x] Only use stack memory to avoid `malloc` calls
-- [x] Minimised memory footprint via array reuse across multiple stages of sha256
-- [x] No memory reallocation, so subsequent calls to sha256 reuse memory
-- [x] Optimised memory layout for increased cpu cache hits
-- [x] No needless byte array conversion (e.g. u8a to u32a)
-- [x] Pure rust, no fancy embedded assembly language or specific cpu instructions
-- [x] No dependencies
-- [x] No std requirements
+- [x] Partially unrolled loops enhance efficiency by optimizing CPU cache utilization.
+- [x] Bypasses Rust's safety checks to eliminate array index safety validations.
+- [x] Utilizes only stack memory, avoiding dynamic memory allocation (`malloc`).
+- [x] Reduces memory footprint through array reuse across multiple SHA-256 stages.
+- [x] Prevents memory reallocation, allowing subsequent SHA-256 calls to reuse existing memory.
+- [x] Optimized memory layout increases CPU cache hit rates.
+- [x] Avoids unnecessary byte array conversions (e.g., u8a to u32a).
+- [x] Written entirely in Rust, with no embedded assembly or specific CPU instructions.
+- [x] No external dependencies.
+- [x] Does not require the standard library (`std`).
+
 
 ## Installation
 
