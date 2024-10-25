@@ -1,10 +1,10 @@
 [package]
-name = "sha-256"
+name = "sha_256"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "sha-256"
+name = "sha_256"
 path = "src/lib.rs"
 
 #[profile.release]
