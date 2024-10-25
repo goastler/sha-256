@@ -19,6 +19,12 @@ pub struct Sha256 {
     n_chunks: usize,
 }
 
+impl Default for Sha256 {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Sha256 {
     /// Creates a new instance of the SHA-256 hash algorithm.
     ///
