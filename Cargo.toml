@@ -1,6 +1,6 @@
 [package]
 name = "sha_256"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 authors = ["George Oastler <goastler4@gmail.com>"]
 description = "Optimised sha-256"
