@@ -1,7 +1,7 @@
 #![no_std]
 
-use core::iter::Iterator;
 use core::convert::TryInto;
+use core::iter::Iterator;
 
 /// A structure representing the SHA-256 hash algorithm.
 pub struct Sha256 {
@@ -20,7 +20,6 @@ pub struct Sha256 {
 }
 
 impl Sha256 {
-
     /// Creates a new instance of the SHA-256 hash algorithm.
     ///
     /// # Returns
