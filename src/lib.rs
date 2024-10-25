@@ -1,4 +1,7 @@
-use std::convert::TryInto;
+#![no_std]
+
+use core::iter::Iterator;
+use core::convert::TryInto;
 
 pub struct Sha256 {
     w: [u32; 64],
