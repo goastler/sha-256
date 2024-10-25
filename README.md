@@ -18,7 +18,7 @@ A fast implementation of sha-256 in rust.
 
 In your project, run:
 ```bash
-cargo add sha-256
+cargo add sha_256
 ```
 
 ## Usage
