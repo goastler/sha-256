@@ -51,7 +51,7 @@ You will need to convert your input into bytes, e.g. string to bytes. See [examp
 If you want the hash as a hex string you will need to convert it from bytes to hex afterwards. See [example project](/example/).
 
 ## Benchmark
-How fast is this library? Up to **25%** faster than the [`sha256`](https://crates.io/crates/sha256) and [`sha`](https://crates.io/crates/sha), and they contain use of Intel's `SHA-NI` cpu instructions (via a feature flag).
+How fast is this library? Up to **25%** faster than the [`sha256`](https://crates.io/crates/sha256) and [`sha`](https://crates.io/crates/sha). They contain use of Intel's `SHA-NI` cpu instructions (via a feature flag), whereas this library uses pure rust.
 
 **However**, the above figures were obtained through some rough benchmarks on only my hardware. More thorough benchmarks are required, YMMV!
 
