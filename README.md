@@ -1,4 +1,4 @@
-# sha256
+# Sha-256
 
 A fast implementation of sha-256 in rust.
 
