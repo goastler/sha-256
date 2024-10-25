@@ -22,22 +22,33 @@ cargo add sha_256
 ```
 
 ## Usage
-The general idea is "bytes in, bytes out". This is the most efficient input and output type to minimise conversions. Consequently, if you want the hash as a hex string you will need to convert it from bytes to hex afterwards - but don't worry, there's a function in this library for exactly that!
 
-```rs
-fn main() {
-    let mut sha256: sha256 = sha256::new();
-    // Message can be [u8] or Vec<u8>
-    let message: String = "hello".to_string();
-    println!("Message: {}", message);
-    let messageBytes: &[u8] = message.as_bytes();
-    let hash: [u8; 32] = sha256.digest(messageBytes);
-    // convert the hash to a hex string
-    let hash_hex = sha256::u8a_to_hex(&hash);
-    println!("Hash: {}", hash_hex);
-}
+Import the library
+```rust
+use sha_256::Sha256;
 ```
-See the examples dir for a full project example.
+
+Create an instance of the sha256 struct.
+
+```rust
+let mut sha256: Sha256 = Sha256::new();
+```
+
+Create your message in bytes.
+```rust
+let bytes = &[0u8, 1u8, 2u8];
+```
+
+Run sha256 to create a digest/hash.
+```rust
+let hash: [u8; 32] = sha256.digest(bytes);
+```
+
+The general idea is "bytes in, bytes out". This is the most efficient input and output type to minimise conversions.
+
+You will need to convert your input into bytes, e.g. string to bytes. See [example project](/example/).
+
+If you want the hash as a hex string you will need to convert it from bytes to hex afterwards. See [example project](/example/).
 
 ## Benchmark
 How fast is this library? Up to **25%** faster than the [`sha256`](https://crates.io/crates/sha256) and [`sha`](https://crates.io/crates/sha), and they contain use of Intel's `SHA-NI` cpu instructions (via a feature flag).
@@ -45,3 +56,6 @@ How fast is this library? Up to **25%** faster than the [`sha256`](https://crate
 **However**, the above figures were obtained through some rough benchmarks on only my hardware. More thorough benchmarks are required, YMMV!
 
 // TODO further benchmarks
+
+## Links
+- [crates.io](https://crates.io/crates/sha_256)
