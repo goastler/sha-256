@@ -493,6 +493,57 @@ const K: [u32; 64] = [
 #[cfg(test)]
 mod tests {
 	use super::*;
+    use sha2::{digest::generic_array::GenericArray, Digest, Sha256 as Theirs};
+
+    struct Rng {
+        state: u64,
+    }
+
+    impl Rng {
+        fn new(seed: u64) -> Self {
+            Self {
+                state: if seed == 0 { 1 } else { seed },
+            }
+        }
+
+        fn next(&mut self) -> u64 {
+            self.state ^= self.state << 13;
+            self.state ^= self.state >> 7;
+            self.state ^= self.state << 17;
+            self.state
+        }
+    }
+
+    #[test]
+    fn test_against_sha2_lib() {
+        // generate random messages
+
+        let mut rng = Rng::new(0);
+
+        let limit = 1_000_000;
+        let mut count: usize = 0;
+        let mut ours = Sha256::new();
+        loop {
+            let mut theirs = sha2::Sha256::new();
+            let mut message_bytes = Vec::<u8>::new();
+            let i = rng.next() % 1024;
+            for _ in 0..=i {
+                message_bytes.push((rng.next() % 255) as u8); // 'a'
+            }
+            let hash = ours.digest(&message_bytes);
+            theirs.update(&message_bytes);
+            let hash2 = theirs.finalize();
+            println!("our hash: {:?}", hash);
+            println!("their hash: {:?}", hash2);
+            assert_eq!(hash, hash2.as_slice(), "hashes[{}] with {}x'a'", i, i+1);
+            
+            count += 1;
+            if count == limit {
+                break;
+            }
+        }
+        println!("total test cases: {}", count);
+    }
 
     #[test]
     fn hash_hello() {
@@ -1570,15 +1621,14 @@ mod tests {
     fn hash_variable_len_bytes_shuffled() {
         // deliberately shuffle the test cases to avoid any potential order dependency
 
-        // tiny xor rng
-        let mut state: u64 = 1; // must be >0
+        let mut rng = Rng::new(0);
 
-        let limit = 1_000_000;
+        let limit = 10_000;
         let mut count: usize = 0;
         let mut sha256 = Sha256::new();
         loop {
             let mut message_bytes = Vec::<u8>::new();
-            let i = (state % HASHES.len() as u64) as usize;
+            let i = (rng.next() % HASHES.len() as u64) as usize;
             println!("i {}", i);
             for _ in 0..=i {
                 message_bytes.push(97); // 'a'
@@ -1588,15 +1638,11 @@ mod tests {
             println!("hash: {:?}", hash);
             println!("expected: {:?}", HASHES[i]);
             assert_eq!(hash, HASHES[i], "hashes[{}] with {}x'a'", i, i+1);
-            
-            // update rng
-            state ^= state << 13;
-            state ^= state >> 7;
-            state ^= state << 17;
 
             count += 1;
             if count == limit {
-                break;            }
+                break;            
+            }
         }
         println!("total test cases: {}", count);
     }
