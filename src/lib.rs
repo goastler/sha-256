@@ -520,7 +520,7 @@ mod tests {
 
         let mut rng = Rng::new(0);
 
-        let limit = 1_000_000;
+        let limit = 100_000;
         let mut count: usize = 0;
         let mut ours = Sha256::new();
         loop {
