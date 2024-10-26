@@ -23,3 +23,7 @@ path = "src/lib.rs"
 
 [badges]
 maintenance = { status = "passively-maintained" }
+
+[dev-dependencies]
+sha2 = "0.10.8"
+
