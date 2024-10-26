@@ -1566,6 +1566,41 @@ mod tests {
         }
     }
 
+    #[test]
+    fn hash_variable_len_bytes_shuffled() {
+        // deliberately shuffle the test cases to avoid any potential order dependency
+
+        // tiny xor rng
+        let mut state: u64 = 1; // must be >0
+
+        let limit = 1_000_000;
+        let mut count: usize = 0;
+        let mut sha256 = Sha256::new();
+        loop {
+            let mut message_bytes = Vec::<u8>::new();
+            let i = (state % HASHES.len() as u64) as usize;
+            println!("i {}", i);
+            for _ in 0..=i {
+                message_bytes.push(97); // 'a'
+            }
+            println!("testing msg of len {}", message_bytes.len());
+            let hash = sha256.digest(&message_bytes);
+            println!("hash: {:?}", hash);
+            println!("expected: {:?}", HASHES[i]);
+            assert_eq!(hash, HASHES[i], "hashes[{}] with {}x'a'", i, i+1);
+            
+            // update rng
+            state ^= state << 13;
+            state ^= state >> 7;
+            state ^= state << 17;
+
+            count += 1;
+            if count == limit {
+                break;            }
+        }
+        println!("total test cases: {}", count);
+    }
+
 }
 
 
