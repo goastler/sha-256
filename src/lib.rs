@@ -1648,15 +1648,3 @@ mod tests {
     }
 
 }
-
-
-fn main() {
-    let mut sha256 = Sha256::new();
-    // let pre = &[97; 59];
-    // let hash_pre = sha256.digest(pre);
-    let message_bytes = &[97; 65];
-    let hash = sha256.digest(message_bytes);
-    let expected: [u8; 32] = [179, 84, 57, 164, 172, 111, 9, 72, 182, 214, 249, 227, 198, 175, 15, 95, 89, 12, 226, 15, 27, 222, 112, 144, 239, 121, 112, 104, 110, 198, 115, 138];
-    println!("{:?}", hash);
-    println!("{:?}", expected);
-}
